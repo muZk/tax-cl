@@ -61,4 +61,27 @@ console.log(`La retención de tus boletas anual es ${retencion}`);
 
 ## Advanced Usage
 
-TODO.
+### `calcular(number: sueldoBrutoMensual)`
+
+Retorna un objeto con el detalle de los datos utilizados para realizar el cálculo del pago de impuestos y cotizaciones.
+
+#### Arguments
+
+Recibe los siguientes argumentos:
+
+* `sueldoBrutoMensual`: *(number)*. Es el total de tus ingresos mensuales.
+
+#### Returns
+
+Retorna un objeto con las siguientes propiedades:
+
+* `sueldoAnual`: *(number)*. Es el sueldo bruto recibido en un año.
+* `gastos`: *(number)*. Gastos supuestos, equivalen a un 30% de tu ingreso bruto, hasta un máximo de 15UTA.
+* `sueldoTributable`: *(number)*. Es el monto sobre el cual se calculan los impuestos a pagar. Corresponde al sueldo anual menos los gastos supuestos.
+* `montoCotizacionesObligatorias`: *(number)*. Es el monto total de las cotizaciones obligatorias que debes pagar. Esto incluye el seguro de invalidez y sobrevivencia, el seguro de la ley de accidentes del trabajo y enfermedades profesionales, el seguro de acompañamiento de niños y niñas, la previsión de salud y la AFP.
+* `retencion`: *(number)*. Es el monto total de las retenciones pagadas al Servicio de Impuestos Internos durante un año. Este monto aumenta año a año hasta llegar al 17%.
+* `impuestos`: *(number)*. Es el total de impuestos a pagar según el tramo impositivo.
+* `deuda`: *(number)*. Es la deuda final, si su valor es positivo indica el valor que debes pagar al Servicio de Impuestos Internos, si es negativo es el valor que recibirás como devolución. 
+* `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial. 
+
+
