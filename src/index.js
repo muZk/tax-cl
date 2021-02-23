@@ -1,18 +1,22 @@
-import { getConfig } from './config';
+import configure from './config';
 
 const OPERACION_RENTA_ACTUAL = 2021;
 
-const config = getConfig(OPERACION_RENTA_ACTUAL);
+const config = configure(OPERACION_RENTA_ACTUAL);
 
 /**
  * Configura el año de la operación renta para los cálculos.
  * @param {Number} year, año de la operación renta
  */
 export function setYear(year) {
-  const newConfig = getConfig(year);
+  const newConfig = configure(year);
   Object.keys(newConfig).forEach(key => {
     config[key] = newConfig[key];
   });
+}
+
+export function getConfig() {
+  return { ...config };
 }
 
 function min(a, b) {
