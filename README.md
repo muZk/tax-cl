@@ -84,4 +84,12 @@ Retorna un objeto con las siguientes propiedades:
 * `deuda`: *(number)*. Es la deuda final, si su valor es positivo indica el valor que debes pagar al Servicio de Impuestos Internos, si es negativo es el valor que recibirás como devolución. 
 * `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial. 
 
+### `setYear(number: year) : void`
 
+Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año sobre el cual se hacen los cálculos es **el año 2021**.
+
+#### Arguments
+
+Recibe el siguiente argumento:
+
+* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son: `2018`, `2019`, `2020` y `2021`.
