@@ -66,7 +66,7 @@ function obtenerTramosImpositivos(uta) {
   ];
 }
 
-export default function getConfig(operacionRenta) {
+export function getConfig(operacionRenta) {
   const year = operacionRenta - 1;
 
   if (!TOPE_IMPONIBLE_MENSUAL[year]) {
@@ -75,7 +75,7 @@ export default function getConfig(operacionRenta) {
   }
 
   return {
-    year: operacionRenta,
+    OPERACION_RENTA: operacionRenta,
     UTA: UTA[year],
     UF: UF[year],
     RETENCION: RETENCION[year] / 100,
