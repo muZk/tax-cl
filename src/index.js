@@ -110,7 +110,7 @@ export function calcular(sueldoMensual) {
   const deuda = calcularDeuda(montoCotizacionesObligatorias, impuestos, retencion);
   const deudaModalidadParcial = calcularDeuda(cotizacionesParciales, impuestos, retencion);
   return {
-    year: config.year,
+    operacionRenta: config.OPERACION_RENTA,
     sueldoAnual,
     gastos,
     sueldoTributable,

@@ -82,7 +82,8 @@ Retorna un objeto con las siguientes propiedades:
 * `retencion`: *(number)*. Es el monto total de las retenciones pagadas al Servicio de Impuestos Internos durante un año. Este monto aumenta año a año hasta llegar al 17%.
 * `impuestos`: *(number)*. Es el total de impuestos a pagar según el tramo impositivo.
 * `deuda`: *(number)*. Es la deuda final, si su valor es positivo indica el valor que debes pagar al Servicio de Impuestos Internos, si es negativo es el valor que recibirás como devolución. 
-* `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial. 
+* `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial.
+* `operacionRenta`: *(number)*. Es el año de la declaración (**2021** por defecto).
 
 ### `configurarDeclaracion(number: year) : void`
 
