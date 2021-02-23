@@ -1,10 +1,23 @@
-const UTA = 595476; // UTA december 2019
-export const UF = 28309.94; // UF 31 december 2019
-const TOPE_DE_GASTOS = 15 * UTA;
-const PORCENTAJE_RETENCION = 10.75;
-export const TOPE_IMPONIBLE_UF = 12 * 80.2; // 80.2
-export const TOPE_IMPONIBLE = TOPE_IMPONIBLE_UF * UF; // anual
-const FACTOR_COBERTURA_PARCIAL = 0.27; //year 2020
+import { getConfig } from './config';
+
+const OPERACION_RENTA_ACTUAL = 2021;
+
+const config = getConfig(OPERACION_RENTA_ACTUAL);
+
+/**
+ * Configura el año de la operación renta para los cálculos.
+ * @param {Number} year, año de la operación renta
+ */
+export function configurarDeclaracion(year) {
+  const newConfig = getConfig(year);
+  Object.keys(newConfig).forEach(key => {
+    config[key] = newConfig[key];
+  });
+}
+
+export function obtenerConfiguracion() {
+  return { ...config };
+}
 
 function min(a, b) {
   return a > b ? b : a;
@@ -12,10 +25,11 @@ function min(a, b) {
 
 export function calcularGastos(sueldoAnual) {
   const gastos = sueldoAnual * 0.3;
-  return min(gastos, TOPE_DE_GASTOS);
+  const tope = 15 * config.UTA;
+  return min(gastos, tope);
 }
 
-export const cotizacionesObligatorias = [
+export const COTIZACIONES_OBLIGATORIAS = [
   { 
     name: "Seguro de invalidez y sobrevivencia", 
     percent: 1.53,
@@ -50,51 +64,39 @@ export const cotizacionesObligatorias = [
 ];
 
 export function calcularSueldoImponible(sueldoAnual) {
-  return min(0.8 * sueldoAnual, TOPE_IMPONIBLE);
+  const topeAnual = config.TOPE_IMPONIBLE_MENSUAL * config.UF * 12;
+  return min(0.8 * sueldoAnual, topeAnual);
 }
 
 export function calcularCotizacionesObligatorias(ingresos, cotizacionParcial = false){
   let totalCotizacionesObligatorias = 0;
-  cotizacionesObligatorias.forEach((cotizacion) => {
+
+  COTIZACIONES_OBLIGATORIAS.forEach((cotizacion) => {
     let montoCotizacion = (calcularSueldoImponible(ingresos) * cotizacion.percent) / 100;
     if(cotizacion.variable && cotizacionParcial){
-      montoCotizacion = montoCotizacion * FACTOR_COBERTURA_PARCIAL;
+      montoCotizacion = montoCotizacion * config.COBERTURA_PARCIAL;
     }
     totalCotizacionesObligatorias += montoCotizacion;
-  })
-  return totalCotizacionesObligatorias
+  });
+
+  return totalCotizacionesObligatorias;
 }
 
 export function calcularRetencion(sueldoAnual) {
-  return (sueldoAnual * PORCENTAJE_RETENCION) / 100;
+  return sueldoAnual * config.RETENCION;
 }
 
-function construirTramoImpositivo(factor, montoMaximo, descuento) {
-  return { factor, montoMaximo, descuento };
-}
-
-export const TRAMOS_IMPOSITIVOS = [
-  construirTramoImpositivo(0, 13.5 * UTA, 0),
-  construirTramoImpositivo(0.04, 30 * UTA, 0.54 * UTA),
-  construirTramoImpositivo(0.08, 50 * UTA, 1.74 * UTA),
-  construirTramoImpositivo(0.135, 70 * UTA, 4.49 * UTA),
-  construirTramoImpositivo(0.23, 90 * UTA, 11.14 * UTA),
-  construirTramoImpositivo(0.304, 120 * UTA, 17.8 * UTA),
-  construirTramoImpositivo(0.35, 150 * UTA, 23.92 * UTA),
-  construirTramoImpositivo(0.4, Number.MAX_VALUE, 30.67 * UTA),
-];
-
-export function obtenerTramoImpositivo(sueldoTributable) {
-  return TRAMOS_IMPOSITIVOS.find(({ montoMaximo }) => sueldoTributable <= montoMaximo);
+export function buscarTramoImpositivo(sueldoTributable) {
+  return config.TRAMOS_IMPOSITIVOS.find(({ montoMaximo }) => sueldoTributable <= montoMaximo);
 }
 
 export function calcularImpuestos(sueldoTributable) {
-  const { factor, descuento } = obtenerTramoImpositivo(sueldoTributable);
+  const { factor, descuento } = buscarTramoImpositivo(sueldoTributable);
   return factor * sueldoTributable - descuento;
 }
 
-export function calcularDeuda(cotizacionesObligatorias, impuestos, retencion) {
-  return impuestos - retencion + cotizacionesObligatorias;
+export function calcularDeuda(montoCotizacionesObligatorias, impuestos, retencion) {
+  return impuestos - retencion + montoCotizacionesObligatorias;
 }
 
 export function calcular(sueldoMensual) {
@@ -108,6 +110,7 @@ export function calcular(sueldoMensual) {
   const deuda = calcularDeuda(montoCotizacionesObligatorias, impuestos, retencion);
   const deudaModalidadParcial = calcularDeuda(cotizacionesParciales, impuestos, retencion);
   return {
+    operacionRenta: config.OPERACION_RENTA,
     sueldoAnual,
     gastos,
     sueldoTributable,
