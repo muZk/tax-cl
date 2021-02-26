@@ -3,6 +3,7 @@ const UTA = {
   2018: 580236,
   2019: 595476,
   2020: 612348,
+  2021: 613572, // 2021-02-28
 };
 
 // Valor UF al 31 de diciembre en https://www.sii.cl/valores_y_fechas/index_valores_y_fechas.html
@@ -10,6 +11,7 @@ const UF = {
   2018: 27565.79,
   2019: 28309.94,
   2020: 29070.33,
+  2021: 29287.38, // 2021-02-28
 };
 
 const RETENCION = {
