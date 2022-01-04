@@ -3,7 +3,8 @@ const UTA = {
   2018: 580236,
   2019: 595476,
   2020: 612348,
-  2021: 613572, // 2021-02-28
+  2021: 650052,
+  2022: 653304, // 2021-01-04
 };
 
 // Valor UF al 31 de diciembre en https://www.sii.cl/valores_y_fechas/index_valores_y_fechas.html
@@ -11,7 +12,8 @@ const UF = {
   2018: 27565.79,
   2019: 28309.94,
   2020: 29070.33,
-  2021: 29287.38, // 2021-02-28
+  2021: 30991.74,
+  2022: 31036.65, // 2021-01-09
 };
 
 const RETENCION = {
@@ -47,6 +49,7 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2019: 79.2, // https://www.spensiones.cl/portal/institucional/594/w3-article-13553.html
   2020: 80.2, // https://www.spensiones.cl/portal/institucional/594/w3-article-13843.html
   2021: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-14366.html
+  2022: 81.6, // Not published yet!
 };
 
 function obtenerTramosImpositivos(uta) {
