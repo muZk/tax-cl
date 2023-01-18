@@ -4,7 +4,8 @@ const UTA = {
   2019: 595476,
   2020: 612348,
   2021: 650052,
-  2022: 653304, // 2021-01-04
+  2022: 733884,
+  2023: 741228, // 2023-01
 };
 
 // Valor UF al 31 de diciembre en https://www.sii.cl/valores_y_fechas/index_valores_y_fechas.html
@@ -13,7 +14,8 @@ const UF = {
   2019: 28309.94,
   2020: 29070.33,
   2021: 30991.74,
-  2022: 31036.65, // 2021-01-09
+  2022: 35110.98,
+  2023: 35287.50, // 2023-01-31
 };
 
 const RETENCION = {
@@ -49,7 +51,8 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2019: 79.2, // https://www.spensiones.cl/portal/institucional/594/w3-article-13553.html
   2020: 80.2, // https://www.spensiones.cl/portal/institucional/594/w3-article-13843.html
   2021: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-14366.html
-  2022: 81.6, // Not published yet!
+  2022: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15178.html
+  2023: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15486.html
 };
 
 function obtenerTramosImpositivos(uta) {
@@ -72,20 +75,20 @@ function obtenerTramosImpositivos(uta) {
 }
 
 export function getConfig(operacionRenta) {
-  const year = operacionRenta - 1;
+  const commercialYear = operacionRenta - 1;
 
-  if (!TOPE_IMPONIBLE_MENSUAL[year]) {
-    const validos = Object.keys(TOPE_IMPONIBLE_MENSUAL).join(', ');
+  if (!TOPE_IMPONIBLE_MENSUAL[commercialYear]) {
+    const validos = Object.keys(TOPE_IMPONIBLE_MENSUAL).map(year => parseInt(year) + 1).join(', ');
     throw new Error(`El año ingresado es incorrecto. Los valores válidos son: ${validos}`);
   }
 
   return {
     OPERACION_RENTA: operacionRenta,
-    UTA: UTA[year],
-    UF: UF[year],
-    RETENCION: RETENCION[year] / 100,
-    COBERTURA_PARCIAL: COBERTURA_PARCIAL[year] / 100,
-    TOPE_IMPONIBLE_MENSUAL: TOPE_IMPONIBLE_MENSUAL[year],
-    TRAMOS_IMPOSITIVOS: obtenerTramosImpositivos(UTA[year]),
+    UTA: UTA[commercialYear],
+    UF: UF[commercialYear],
+    RETENCION: RETENCION[commercialYear] / 100,
+    COBERTURA_PARCIAL: COBERTURA_PARCIAL[commercialYear] / 100,
+    TOPE_IMPONIBLE_MENSUAL: TOPE_IMPONIBLE_MENSUAL[commercialYear],
+    TRAMOS_IMPOSITIVOS: obtenerTramosImpositivos(UTA[commercialYear]),
   };
 }

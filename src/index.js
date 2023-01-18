@@ -1,6 +1,6 @@
 import { getConfig } from './config';
 
-const OPERACION_RENTA_ACTUAL = 2021;
+const OPERACION_RENTA_ACTUAL = 2023;
 
 const config = getConfig(OPERACION_RENTA_ACTUAL);
 
@@ -31,19 +31,19 @@ export function calcularGastos(sueldoAnual) {
 
 export const COTIZACIONES_OBLIGATORIAS = [
   { 
-    name: "Seguro de invalidez y sobrevivencia", 
-    percent: 1.53,
+    name: "Seguro de invalidez y sobrevivencia (SIS)", 
+    percent: 1.54, // https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9917.html#recuadros_articulo_4130_0
     variable: false,
   },
   {
     name:
-      "Seguro de la ley de accidentes del trabajo y enfermedades profesionales",
-    percent: 0.91,
+      "Seguro de la ley de accidentes del trabajo y enfermedades profesionales (ATEP)",
+    percent: 0.90,
     variable: false,
   },
   { 
-    name: "Seguro de acompañamiento niños y niñas", 
-    percent: 0.02,
+    name: "Seguro de acompañamiento niños y niñas (Ley SANNA)", 
+    percent: 0.03, // https://www.chileatiende.gob.cl/fichas/53276-seguro-para-el-acompanamiento-de-ninos-y-ninas-afectados-por-una-condicion-grave-de-salud-ley-sanna
     variable: false,
   },
   { 
@@ -58,7 +58,7 @@ export const COTIZACIONES_OBLIGATORIAS = [
   },
   { 
     name: "Comisión AFP", 
-    percent: 0.77,
+    percent: 0.58, // AFP Modelo https://www.spensiones.cl/apps/estcom/estcom.php
     variable: false
   },
 ];
