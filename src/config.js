@@ -56,22 +56,21 @@ const TOPE_IMPONIBLE_MENSUAL = {
 };
 
 function obtenerTramosImpositivos(uta) {
-  const construirTramoImpositivo = (factor, montoMaximo, descuento) => ({
+  const maxValue = Number.MAX_VALUE;
+  return [
+    [13.5 * uta,     0,           0],
+    [  30 * uta,  0.04,  0.54 * uta],
+    [  50 * uta,  0.08,  1.74 * uta],
+    [  70 * uta, 0.135,  4.49 * uta],
+    [  90 * uta,  0.23, 11.14 * uta],
+    [ 120 * uta, 0.304,  17.8 * uta],
+    [ 310 * uta,  0.35, 23.32 * uta],
+    [  maxValue,   0.4, 38.82 * uta],
+  ].map(([montoMaximo, factor, descuento]) => ({
     factor,
     montoMaximo,
     descuento,
-  });
-
-  return [
-    construirTramoImpositivo(0, 13.5 * uta, 0),
-    construirTramoImpositivo(0.04, 30 * uta, 0.54 * uta),
-    construirTramoImpositivo(0.08, 50 * uta, 1.74 * uta),
-    construirTramoImpositivo(0.135, 70 * uta, 4.49 * uta),
-    construirTramoImpositivo(0.23, 90 * uta, 11.14 * uta),
-    construirTramoImpositivo(0.304, 120 * uta, 17.8 * uta),
-    construirTramoImpositivo(0.35, 150 * uta, 23.92 * uta),
-    construirTramoImpositivo(0.4, Number.MAX_VALUE, 30.67 * uta),
-  ];
+  }));
 }
 
 export function getConfig(operacionRenta) {
