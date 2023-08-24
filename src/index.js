@@ -80,7 +80,6 @@ export function simularCotizaciones(ingresos, cotizacionParcial = false) {
   } else {
     let remanente = calcularRetencion(sueldoImponible / 0.8)
     return COTIZACIONES_OBLIGATORIAS.map(cotizacion => {
-      console.log(remanente)
       if (cotizacion.name === 'AFP') {
         const monto = min(remanente, sueldoImponible * cotizacion.percent / 100)
         return {
