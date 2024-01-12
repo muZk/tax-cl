@@ -101,7 +101,7 @@ export function simularCotizaciones(ingresos, cotizacionParcial = false) {
   }
 }
 
-export function calcularCotizacionesObligatorias(ingresos, cotizacionParcial = false){
+export function calcularCotizacionesObligatorias(ingresos, cotizacionParcial = false) {
   return simularCotizaciones(ingresos, cotizacionParcial).reduce((total, cotizacion) => {
     return total + cotizacion.value;
   }, 0)
