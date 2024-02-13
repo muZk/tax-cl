@@ -55,7 +55,7 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2021: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-14366.html
   2022: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15178.html
   2023: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15486.html
-  2024: 81.6, // Not yet available
+  2024: 84.3, // https://www.spensiones.cl/portal/institucional/594/w3-article-15855.html
 };
 
 /**
