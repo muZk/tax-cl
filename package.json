@@ -1,6 +1,6 @@
 {
   "name": "tax-cl",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Librería cálculo de impuestos y cotizaciones en Chile 🇨🇱",
   "main": "lib/index.js",
   "repository": "git@github.com:muZk/tax-cl.git",
