@@ -1,6 +1,6 @@
 import { getConfig } from './config';
 
-const OPERACION_RENTA_ACTUAL = 2023;
+const OPERACION_RENTA_ACTUAL = 2024;
 
 const config = getConfig(OPERACION_RENTA_ACTUAL);
 
@@ -29,10 +29,25 @@ export function calcularGastos(rentaAnual) {
   return min(gastos, tope);
 }
 
-export const COTIZACIONES_OBLIGATORIAS = [
+const COTIZACIONES_OBLIGATORIAS = [
   {
     name: "Seguro de invalidez y sobrevivencia (SIS)",
-    percent: 1.54, // https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9917.html#recuadros_articulo_4130_0
+    percent: () => {
+      // Esto cambia por año, no tengo seguridad de los años anteriores al 2022
+      // Aunque el uso de esta librería es más actual que histórico (importa año comercial presente y anterior)
+      // No me gusta que esto esté aquí, sin embargo, como hotfix está OK
+      // https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9917.html#recuadros_articulo_4130_0
+      const SIS = {
+        2018: 1.99,
+        2019: 1.99,
+        2020: 1.99,
+        2021: 1.85,
+        2022: 1.54,
+        2023: 1.47,
+        2024: 1.49,
+      };
+      return SIS[config.OPERACION_RENTA - 1] || SIS[2023];
+    },
     variable: false,
   },
   {
@@ -70,7 +85,8 @@ export function simularCotizaciones(ingresos, cotizacionParcial = false) {
     const sueldoImponibleParcial = sueldoImponible * config.COBERTURA_PARCIAL
 
     return COTIZACIONES_OBLIGATORIAS.map(cotizacion => {
-      const monto = (cotizacion.variable ? sueldoImponibleParcial : sueldoImponible) * cotizacion.percent / 100
+      const percentage = typeof cotizacion.percent === 'function' ? cotizacion.percent() : cotizacion.percent
+      const monto = (cotizacion.variable ? sueldoImponibleParcial : sueldoImponible) * percentage / 100
       return {
         name: cotizacion.name,
         percent: 100 * monto / sueldoImponible,

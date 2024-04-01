@@ -87,10 +87,10 @@ Retorna un objeto con las siguientes propiedades:
 
 ### `configurarDeclaracion(number: year) : void`
 
-Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2023**.
+Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2024**.
 
 #### Arguments
 
 Recibe el siguiente argumento:
 
-* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2024. 
+* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2024.
