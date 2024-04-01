@@ -73,6 +73,10 @@ const COTIZACIONES_OBLIGATORIAS = [
   },
 ];
 
+function getContributionPercentage(contribution) {
+  return typeof contribution.percent === 'function' ? contribution.percent() : contribution.percent
+}
+
 export function calcularSueldoImponible(sueldoAnual) {
   const topeAnual = config.TOPE_IMPONIBLE_MENSUAL * config.UF * 12;
   return min(0.8 * sueldoAnual, topeAnual);
@@ -85,8 +89,7 @@ export function simularCotizaciones(ingresos, cotizacionParcial = false) {
     const sueldoImponibleParcial = sueldoImponible * config.COBERTURA_PARCIAL
 
     return COTIZACIONES_OBLIGATORIAS.map(cotizacion => {
-      const percentage = typeof cotizacion.percent === 'function' ? cotizacion.percent() : cotizacion.percent
-      const monto = (cotizacion.variable ? sueldoImponibleParcial : sueldoImponible) * percentage / 100
+      const monto = (cotizacion.variable ? sueldoImponibleParcial : sueldoImponible) * getContributionPercentage(cotizacion) / 100
       return {
         name: cotizacion.name,
         percent: 100 * monto / sueldoImponible,
@@ -97,15 +100,15 @@ export function simularCotizaciones(ingresos, cotizacionParcial = false) {
     let remanente = calcularRetencion(sueldoImponible / 0.8)
     return COTIZACIONES_OBLIGATORIAS.map(cotizacion => {
       if (cotizacion.name === 'AFP') {
-        const monto = min(remanente, sueldoImponible * cotizacion.percent / 100)
+        const monto = min(remanente, sueldoImponible * getContributionPercentage(cotizacion) / 100)
         return {
           name: cotizacion.name,
           percent: 100 * monto / sueldoImponible,
           value: monto,
         }
       } else {
-        const percent = cotizacion.percent
-        const monto = sueldoImponible * cotizacion.percent / 100
+        const percent = getContributionPercentage(cotizacion)
+        const monto = sueldoImponible * percent / 100
         remanente -= monto
         return {
           name: cotizacion.name,
