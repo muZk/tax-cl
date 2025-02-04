@@ -1,6 +1,6 @@
 import { getConfig } from './config';
 
-const OPERACION_RENTA_ACTUAL = 2024;
+const OPERACION_RENTA_ACTUAL = 2025;
 
 const config = getConfig(OPERACION_RENTA_ACTUAL);
 
@@ -45,6 +45,7 @@ const COTIZACIONES_OBLIGATORIAS = [
         2022: 1.54,
         2023: 1.47,
         2024: 1.49,
+        2025: 1.5,
       };
       return SIS[config.OPERACION_RENTA - 1] || SIS[2023];
     },
@@ -68,7 +69,7 @@ const COTIZACIONES_OBLIGATORIAS = [
   },
   {
     name: "AFP",
-    percent: 10.58,
+    percent: 10.49,
     variable: true,
   },
 ];

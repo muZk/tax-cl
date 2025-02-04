@@ -106,3 +106,4 @@ dist
 /lib
 .DS_Store
 .idea
+.parcel-cache

@@ -6,7 +6,8 @@ const UTA = {
   2021: 650052,
   2022: 733884,
   2023: 770592,
-  2024: 772116, // 2024-02
+  2024: 807528,
+  2025: 807528, // 2025-01
 };
 
 // Valor UF al 31 de diciembre en https://www.sii.cl/valores_y_fechas/index_valores_y_fechas.html
@@ -17,7 +18,8 @@ const UF = {
   2021: 30991.74,
   2022: 35110.98,
   2023: 36789.36,
-  2024: 36679.62, // 2024-02-09
+  2024: 38416.69,
+  2025: 38384.41, // 2025-01-31
 };
 
 const RETENCION = {
@@ -56,6 +58,7 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2022: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15178.html
   2023: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15486.html
   2024: 84.3, // https://www.spensiones.cl/portal/institucional/594/w3-article-15855.html
+  2025: 87.8, // https://www.spensiones.cl/portal/institucional/594/w3-article-16252.html
 };
 
 /**

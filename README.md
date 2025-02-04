@@ -83,14 +83,14 @@ Retorna un objeto con las siguientes propiedades:
 * `impuestos`: *(number)*. Es el total de impuestos a pagar según el tramo impositivo.
 * `deuda`: *(number)*. Es la deuda final, si su valor es positivo indica el valor que debes pagar al Servicio de Impuestos Internos, si es negativo es el valor que recibirás como devolución. 
 * `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial.
-* `operacionRenta`: *(number)*. Es el año de la declaración (**2023** por defecto).
+* `operacionRenta`: *(number)*. Es el año de la declaración (**2025** por defecto).
 
 ### `configurarDeclaracion(number: year) : void`
 
-Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2024**.
+Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2025**.
 
 #### Arguments
 
 Recibe el siguiente argumento:
 
-* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2024.
+* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2025.
