@@ -6,10 +6,12 @@ const config = getConfig(OPERACION_RENTA_ACTUAL);
 
 /**
  * Configura el año de la operación renta para los cálculos.
- * @param year {Number}, año de la operación renta
+ * @param {Number} year - Año de la operación renta
+ * @param {Object} [options] - Opciones de configuración
+ * @param {Number} [options.uf] - Valor UF personalizado (por defecto usa el valor del año)
  */
-export function configurarDeclaracion(year) {
-  const newConfig = getConfig(year);
+export function configurarDeclaracion(year, options = {}) {
+  const newConfig = getConfig(year, options);
   Object.keys(newConfig).forEach(key => {
     config[key] = newConfig[key];
   });

@@ -100,6 +100,8 @@ function obtenerTramosImpositivos(uta) {
  * Retrieves the configuration for a given "operacionRenta" year.
  *
  * @param {Number} operacionRenta - The year for which the operation configuration is required.
+ * @param {Object} [options] - Optional configuration overrides.
+ * @param {Number} [options.uf] - Custom UF value to use instead of the default for the year.
  * @throws {Error} Throws an error if the given year is not available.
   * @returns {{
   *  OPERACION_RENTA: Number,
@@ -113,7 +115,7 @@ function obtenerTramosImpositivos(uta) {
   * An object containing various configuration values:
   * - `OPERACION_RENTA`: The year for which the configuration is valid.
   * - `UTA`: The UTA value for the given year (December).
-  * - `UF`: The UF value for the given year (last day of December).
+  * - `UF`: The UF value for the given year (last day of December), or custom value if provided.
   * - `RETENCION`: The retention percentage for the given year.
   * - `COBERTURA_PARCIAL`: The partial coverage percentage for the given year.
   * - `TOPE_IMPONIBLE_MENSUAL`: The monthly taxable income cap for the given year.
@@ -121,12 +123,17 @@ function obtenerTramosImpositivos(uta) {
   *   - `factor`: The tax rate for the bracket.
   *   - `montoMaximo`: The maximum amount for the bracket.
   *   - `descuento`: The discount for the bracket.
-  * 
+  *
   * @example
   * const config = getConfig(2022);
   * console.log(config.OPERACION_RENTA); // 2022
+  *
+  * @example
+  * // With custom UF value
+  * const config = getConfig(2025, { uf: 40000 });
+  * console.log(config.UF); // 40000
 */
-export function getConfig(operacionRenta) {
+export function getConfig(operacionRenta, options = {}) {
   const commercialYear = operacionRenta - 1;
 
   if (!TOPE_IMPONIBLE_MENSUAL[commercialYear]) {
@@ -134,10 +141,12 @@ export function getConfig(operacionRenta) {
     throw new Error(`El año ingresado es incorrecto. Los valores válidos son: ${validos}`);
   }
 
+  const ufValue = options.uf !== undefined ? options.uf : UF[commercialYear];
+
   return {
     OPERACION_RENTA: operacionRenta,
     UTA: UTA[commercialYear],
-    UF: UF[commercialYear],
+    UF: ufValue,
     RETENCION: RETENCION[commercialYear] / 100,
     COBERTURA_PARCIAL: COBERTURA_PARCIAL[commercialYear] / 100,
     TOPE_IMPONIBLE_MENSUAL: TOPE_IMPONIBLE_MENSUAL[commercialYear],
