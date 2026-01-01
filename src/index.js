@@ -46,6 +46,7 @@ const COTIZACIONES_OBLIGATORIAS = [
         2023: 1.47,
         2024: 1.49,
         2025: 1.5,
+        2026: 1.5, // Igual que el 2025, ya que no se ha publicado el valor
       };
       return SIS[config.OPERACION_RENTA - 1] || SIS[2023];
     },
