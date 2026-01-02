@@ -93,4 +93,4 @@ Configura el año de la operación renta sobre la cual aplican los cálculos. Po
 
 Recibe el siguiente argumento:
 
-* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2025.
+* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2026.
