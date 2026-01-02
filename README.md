@@ -85,12 +85,26 @@ Retorna un objeto con las siguientes propiedades:
 * `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial.
 * `operacionRenta`: *(number)*. Es el año de la declaración (**2025** por defecto).
 
-### `configurarDeclaracion(number: year) : void`
+### `configurarDeclaracion(number: year, object?: options) : void`
 
 Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2025**.
 
 #### Arguments
 
-Recibe el siguiente argumento:
+Recibe los siguientes argumentos:
 
 * `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2026.
+* `options`: *(object, opcional)*, opciones de configuración adicionales:
+  * `uf`: *(number, opcional)*, valor UF personalizado. Si no se especifica, se usa el valor por defecto del año.
+
+#### Example
+
+```javascript
+const { configurarDeclaracion, calcular } = require('tax-cl');
+
+// Usar valores por defecto
+configurarDeclaracion(2025);
+
+// Usar UF personalizado
+configurarDeclaracion(2025, { uf: 40000 });
+```
