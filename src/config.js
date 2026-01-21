@@ -21,7 +21,7 @@ const UF = {
   2023: 36789.36,
   2024: 38416.69,
   2025: 39727.96,
-  2026: 39762.52, // 2026-01-09
+  2026: 39706.07, // 2026-01-31
 };
 
 const RETENCION = {
@@ -61,7 +61,7 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2023: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15486.html
   2024: 84.3, // https://www.spensiones.cl/portal/institucional/594/w3-article-15855.html
   2025: 87.8, // https://www.spensiones.cl/portal/institucional/594/w3-article-16252.html
-  2026: 87.8, // Igual que el 2025, ya que no se ha publicado el valor
+  2026: 89.9, // https://www.spensiones.cl/portal/institucional/594/w3-article-16885.html
 };
 
 /**
