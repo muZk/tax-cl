@@ -93,10 +93,11 @@ export function simularCotizaciones(ingresos, cotizacionParcial = false) {
     const sueldoImponibleParcial = sueldoImponible * config.COBERTURA_PARCIAL
 
     return COTIZACIONES_OBLIGATORIAS.map(cotizacion => {
-      const monto = (cotizacion.variable ? sueldoImponibleParcial : sueldoImponible) * getContributionPercentage(cotizacion) / 100
+      const percent = getContributionPercentage(cotizacion)
+      const monto = (cotizacion.variable ? sueldoImponibleParcial : sueldoImponible) * percent / 100
       return {
         name: cotizacion.name,
-        percent: 100 * monto / sueldoImponible,
+        percent,
         value: monto,
       }
     })
