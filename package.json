@@ -11,7 +11,7 @@
   "author": "Nicolás Gómez <ngomez@hey.com>",
   "license": "MIT",
   "scripts": {
-    "prepublish": "parcel build"
+    "prepublishOnly": "parcel build"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
