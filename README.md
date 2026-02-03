@@ -56,7 +56,7 @@ console.log(`Tus gastos supuestos son ${resultado.gastos}`);
 console.log(`Tu sueldo tributable es ${resultado.sueldoTributable}`);
 console.log(`Lo que tendrás que pagar por impuestos es ${resultado.impuestos}`);
 console.log(`Lo que tendrás que pagar por cotizaciones es igual a ${resultado.montoCotizacionesObligatorias}`);
-console.log(`La retención de tus boletas anual es ${retencion}`);
+console.log(`La retención de tus boletas anual es ${resultado.retencion}`);
 ```
 
 ## Advanced Usage
@@ -82,6 +82,8 @@ Retorna un objeto con las siguientes propiedades:
 * `retencion`: *(number)*. Es el monto total de las retenciones pagadas al Servicio de Impuestos Internos durante un año. Este monto aumenta año a año hasta llegar al 17%.
 * `impuestos`: *(number)*. Es el total de impuestos a pagar según el tramo impositivo.
 * `deuda`: *(number)*. Es la deuda final, si su valor es positivo indica el valor que debes pagar al Servicio de Impuestos Internos, si es negativo es el valor que recibirás como devolución. 
+* `montoCotizacionParcial`: *(number)*. Es el monto total de las cotizaciones en modalidad parcial.
+* `cotizaciones`: *(object)*. Es un objeto con el detalle de las cotizaciones, con las propiedades `parcial` y `total`, cada una con el desglose de cada cotización.
 * `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial.
 * `operacionRenta`: *(number)*. Es el año de la declaración (**2025** por defecto).
 
@@ -93,7 +95,7 @@ Configura el año de la operación renta sobre la cual aplican los cálculos. Po
 
 Recibe los siguientes argumentos:
 
-* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2018 hasta el 2026.
+* `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2019 hasta el 2027.
 * `options`: *(object, opcional)*, opciones de configuración adicionales:
   * `uf`: *(number, opcional)*, valor UF personalizado. Si no se especifica, se usa el valor por defecto del año.
 
