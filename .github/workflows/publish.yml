@@ -19,7 +19,13 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
+      - run: npm install -g npm@^11.5.1
       - run: npm ci
+
+      - name: Show tool versions
+        run: |
+          node -v
+          npm -v
 
       - name: Check if version changed
         id: version
@@ -39,7 +45,7 @@ jobs:
 
       - name: Publish
         if: steps.version.outputs.changed == 'true'
-        run: npm publish --provenance
+        run: npm publish
 
       - name: Create git tag
         if: steps.version.outputs.changed == 'true'
