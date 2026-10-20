@@ -3,3 +3,5 @@
 .parcel-cache
 .tool-versions
 .github
+/test
+.claude
