@@ -64,6 +64,30 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2026: 90, // https://www.spensiones.cl/portal/institucional/594/w3-article-16921.html
 };
 
+// Tasa del seguro de invalidez y sobrevivencia (SIS) por año comercial.
+// Esto cambia por año, no tengo seguridad de los años anteriores al 2022
+// https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9917.html#recuadros_articulo_4130_0
+const SIS = {
+  2018: 1.99,
+  2019: 1.99,
+  2020: 1.99,
+  2021: 1.85,
+  2022: 1.54,
+  2023: 1.47,
+  2024: 1.49,
+  2025: 1.49,
+  // 2026: vigente desde agosto 2026 (SP y Previred). Provisorio: la SP aún no publica la tasa del AT 2027,
+  // y la renta usa la vigente a diciembre (https://previsionsocial.gob.cl/wp-content/uploads/2026/01/20251218-Documento-Independientes-CCP-VF.pdf)
+  // https://www.previred.com/indicadores-previsionales/
+  2026: 1.78,
+};
+
+// 10% + comisión de la AFP más barata (Uno: 0,49% hasta sep 2025, 0,46% desde oct 2025)
+// https://www.previred.com/indicadores-previsionales/
+function obtenerTasaAfp(commercialYear) {
+  return commercialYear >= 2026 ? 10.46 : 10.49;
+}
+
 /**
  * Calculates and returns tax brackets based on the provided UTA value.
  *
@@ -102,6 +126,9 @@ function obtenerTramosImpositivos(uta) {
  * @param {Number} operacionRenta - The year for which the operation configuration is required.
  * @param {Object} [options] - Optional configuration overrides.
  * @param {Number} [options.uf] - Custom UF value to use instead of the default for the year.
+ * @param {Number} [options.uta] - Custom UTA value (also used for the tax brackets).
+ * @param {Number} [options.sis] - Custom SIS rate, in percent (e.g. 1.78).
+ * @param {Number} [options.afp] - Custom AFP rate including the commission, in percent (e.g. 10.46).
  * @throws {Error} Throws an error if the given year is not available.
   * @returns {{
   *  OPERACION_RENTA: Number,
@@ -110,15 +137,19 @@ function obtenerTramosImpositivos(uta) {
   *  RETENCION: Number,
   *  COBERTURA_PARCIAL: Number,
   *   TOPE_IMPONIBLE_MENSUAL: Number,
+  *   SIS: Number,
+  *   AFP: Number,
   *   TRAMOS_IMPOSITIVOS: Array.<{factor: number, montoMaximo: number, descuento: number}>
   * }}
   * An object containing various configuration values:
   * - `OPERACION_RENTA`: The year for which the configuration is valid.
-  * - `UTA`: The UTA value for the given year (December).
+  * - `UTA`: The UTA value for the given year (December), or custom value if provided.
   * - `UF`: The UF value for the given year (last day of December), or custom value if provided.
   * - `RETENCION`: The retention percentage for the given year.
   * - `COBERTURA_PARCIAL`: The partial coverage percentage for the given year.
   * - `TOPE_IMPONIBLE_MENSUAL`: The monthly taxable income cap for the given year.
+  * - `SIS`: The SIS rate (percent) for the given year, or custom value if provided.
+  * - `AFP`: The AFP rate (percent, including commission) for the given year, or custom value if provided.
   * - `TRAMOS_IMPOSITIVOS`: An array of objects, each containing:
   *   - `factor`: The tax rate for the bracket.
   *   - `montoMaximo`: The maximum amount for the bracket.
@@ -132,6 +163,10 @@ function obtenerTramosImpositivos(uta) {
   * // With custom UF value
   * const config = getConfig(2025, { uf: 40000 });
   * console.log(config.UF); // 40000
+  *
+  * @example
+  * // With provisional values before December is published
+  * const config = getConfig(2027, { uta: 870000, sis: 1.78 });
 */
 export function getConfig(operacionRenta, options = {}) {
   const commercialYear = operacionRenta - 1;
@@ -142,14 +177,19 @@ export function getConfig(operacionRenta, options = {}) {
   }
 
   const ufValue = options.uf !== undefined ? options.uf : UF[commercialYear];
+  const utaValue = options.uta !== undefined ? options.uta : UTA[commercialYear];
+  const sisValue = options.sis !== undefined ? options.sis : SIS[commercialYear] || SIS[2023];
+  const afpValue = options.afp !== undefined ? options.afp : obtenerTasaAfp(commercialYear);
 
   return {
     OPERACION_RENTA: operacionRenta,
-    UTA: UTA[commercialYear],
+    UTA: utaValue,
     UF: ufValue,
     RETENCION: RETENCION[commercialYear] / 100,
     COBERTURA_PARCIAL: COBERTURA_PARCIAL[commercialYear] / 100,
     TOPE_IMPONIBLE_MENSUAL: TOPE_IMPONIBLE_MENSUAL[commercialYear],
-    TRAMOS_IMPOSITIVOS: obtenerTramosImpositivos(UTA[commercialYear]),
+    SIS: sisValue,
+    AFP: afpValue,
+    TRAMOS_IMPOSITIVOS: obtenerTramosImpositivos(utaValue),
   };
 }
