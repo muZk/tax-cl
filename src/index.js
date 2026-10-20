@@ -1,4 +1,4 @@
-import { getConfig } from './config';
+import { getConfig } from './config.js';
 
 const OPERACION_RENTA_ACTUAL = 2025;
 
@@ -48,7 +48,10 @@ const COTIZACIONES_OBLIGATORIAS = [
         2023: 1.47,
         2024: 1.49,
         2025: 1.49,
-        2026: 1.5,
+        // 2026: vigente desde agosto 2026 (SP y Previred). Provisorio: la SP aún no publica la tasa del AT 2027,
+        // y la renta usa la vigente a diciembre (https://previsionsocial.gob.cl/wp-content/uploads/2026/01/20251218-Documento-Independientes-CCP-VF.pdf)
+        // https://www.previred.com/indicadores-previsionales/
+        2026: 1.78,
       };
       return SIS[config.OPERACION_RENTA - 1] || SIS[2023];
     },
@@ -72,7 +75,9 @@ const COTIZACIONES_OBLIGATORIAS = [
   },
   {
     name: "AFP",
-    percent: 10.49,
+    // 10% + comisión de la AFP más barata (Uno: 0,49% hasta sep 2025, 0,46% desde oct 2025)
+    // https://www.previred.com/indicadores-previsionales/
+    percent: () => (config.OPERACION_RENTA - 1 >= 2026 ? 10.46 : 10.49),
     variable: true,
   },
 ];
