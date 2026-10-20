@@ -8,7 +8,7 @@ const UTA = {
   2023: 770592,
   2024: 807528,
   2025: 834504,
-  2026: 869280, // 2026-11 (provisorio, falta diciembre)
+  2026: 869280, // 2026-11 (provisorio, falta diciembre) https://www.sii.cl/valores_y_fechas/utm/utm2026.htm
 };
 
 // Valor UF al 31 de diciembre en https://www.sii.cl/valores_y_fechas/index_valores_y_fechas.html
@@ -21,7 +21,7 @@ const UF = {
   2023: 36789.36,
   2024: 38416.69,
   2025: 39727.96,
-  2026: 41295.46, // 2026-11-09 (provisorio, falta 31 de diciembre)
+  2026: 41295.46, // 2026-11-09 (provisorio, falta 31 de diciembre) https://www.sii.cl/valores_y_fechas/uf/uf2026.htm
 };
 
 const RETENCION = {
@@ -61,6 +61,8 @@ const TOPE_IMPONIBLE_MENSUAL = {
   2023: 81.6, // https://www.spensiones.cl/portal/institucional/594/w3-article-15486.html
   2024: 84.3, // https://www.spensiones.cl/portal/institucional/594/w3-article-15855.html
   2025: 87.8, // https://www.spensiones.cl/portal/institucional/594/w3-article-16252.html
+  // 2026: 89,9 UF solo en enero (Res. Ex. 27, https://www.spensiones.cl/portal/institucional/594/w3-article-16885.html).
+  // Desde las remuneraciones de febrero rige 90 UF (Res. Ex. 237, que deja sin efecto la 27)
   2026: 90, // https://www.spensiones.cl/portal/institucional/594/w3-article-16921.html
 };
 
@@ -76,14 +78,17 @@ const SIS = {
   2023: 1.47,
   2024: 1.49,
   2025: 1.49,
-  // 2026: vigente desde agosto 2026 (SP y Previred). Provisorio: la SP aún no publica la tasa del AT 2027,
-  // y la renta usa la vigente a diciembre (https://previsionsocial.gob.cl/wp-content/uploads/2026/01/20251218-Documento-Independientes-CCP-VF.pdf)
+  // 2026: provisorio. 1,78% rige para remuneraciones de agosto a octubre 2026 (SP Oficio Ord. 15.295),
+  // falta la tasa de noviembre/diciembre y la que publique la SP para el AT 2027. La renta usa la vigente a diciembre
+  // (https://previsionsocial.gob.cl/wp-content/uploads/2026/01/20251218-Documento-Independientes-CCP-VF.pdf)
+  // https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9917.html
   // https://www.previred.com/indicadores-previsionales/
   2026: 1.78,
 };
 
 // 10% + comisión de la AFP más barata (Uno: 0,49% hasta sep 2025, 0,46% desde oct 2025)
-// https://www.previred.com/indicadores-previsionales/
+// https://www.spensiones.cl/portal/institucional/594/w3-article-16714.html
+// https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9897.html
 function obtenerTasaAfp(commercialYear) {
   return commercialYear >= 2026 ? 10.46 : 10.49;
 }
