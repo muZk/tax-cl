@@ -25,7 +25,9 @@ yarn add tax-cl
 El método que calcula cuánto debes pagar (o cuánto recibirás en la devolución) se llama `calcular`:
 
 ```javascript
-const { calcular } = require('tax-cl'); 
+const { calcular } = require('tax-cl');
+// o, con ES modules:
+// import { calcular } from 'tax-cl';
 
 const resultado = calcular(1400000); // sueldo bruto = 1.400.000 mensual
 
@@ -85,11 +87,11 @@ Retorna un objeto con las siguientes propiedades:
 * `montoCotizacionParcial`: *(number)*. Es el monto total de las cotizaciones en modalidad parcial.
 * `cotizaciones`: *(object)*. Es un objeto con el detalle de las cotizaciones, con las propiedades `parcial` y `total`, cada una con el desglose de cada cotización.
 * `deudaModalidadParcial`: *(number)*. Es la deuda final, pero considerando que has optado por pagar las cotizaciones en modalidad parcial.
-* `operacionRenta`: *(number)*. Es el año de la declaración (**2025** por defecto).
+* `operacionRenta`: *(number)*. Es el año de la declaración (**2026** por defecto).
 
 ### `configurarDeclaracion(number: year, object?: options) : void`
 
-Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2025**.
+Configura el año de la operación renta sobre la cual aplican los cálculos. Por defecto, el año de la declaración es **2026**.
 
 #### Arguments
 
@@ -98,6 +100,13 @@ Recibe los siguientes argumentos:
 * `year`: *(number)*, año de la operación renta para la realización de los cálculos. Los valores válidos son desde el 2019 hasta el 2027.
 * `options`: *(object, opcional)*, opciones de configuración adicionales:
   * `uf`: *(number, opcional)*, valor UF personalizado. Si no se especifica, se usa el valor por defecto del año.
+  * `uta`: *(number, opcional)*, valor UTA personalizado. También se usa para calcular los tramos de impuesto y el tope de gastos presuntos.
+  * `sis`: *(number, opcional)*, tasa del seguro de invalidez y sobrevivencia, en porcentaje (ej: `1.78`).
+  * `afp`: *(number, opcional)*, tasa de la AFP incluyendo la comisión, en porcentaje (ej: `10.46`).
+
+Cada vez que llamas a `configurarDeclaracion` se parte desde los valores por defecto del año: los overrides de una llamada anterior no se mantienen.
+
+Los overrides sirven, por ejemplo, para calcular la declaración del próximo año antes de que se publiquen los valores de diciembre.
 
 #### Example
 
@@ -109,4 +118,16 @@ configurarDeclaracion(2025);
 
 // Usar UF personalizado
 configurarDeclaracion(2025, { uf: 40000 });
+
+// Usar valores provisorios para la operación renta 2027
+configurarDeclaracion(2027, { uf: 41500, uta: 870000, sis: 1.78 });
+```
+
+`obtenerConfiguracion()` retorna la configuración activa, incluyendo `UF`, `UTA`, `SIS` y `AFP`.
+
+## Development
+
+```console
+npm test                # tests con node:test
+npm run prepublishOnly  # build con Parcel: lib/index.cjs (require) y lib/index.mjs (import)
 ```

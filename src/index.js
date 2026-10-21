@@ -1,6 +1,6 @@
 import { getConfig } from './config.js';
 
-const OPERACION_RENTA_ACTUAL = 2025;
+const OPERACION_RENTA_ACTUAL = 2026;
 
 const config = getConfig(OPERACION_RENTA_ACTUAL);
 
@@ -9,6 +9,9 @@ const config = getConfig(OPERACION_RENTA_ACTUAL);
  * @param {Number} year - Año de la operación renta
  * @param {Object} [options] - Opciones de configuración
  * @param {Number} [options.uf] - Valor UF personalizado (por defecto usa el valor del año)
+ * @param {Number} [options.uta] - Valor UTA personalizado (también se usa para los tramos)
+ * @param {Number} [options.sis] - Tasa SIS personalizada, en porcentaje (ej: 1.78)
+ * @param {Number} [options.afp] - Tasa AFP personalizada con comisión, en porcentaje (ej: 10.46)
  */
 export function configurarDeclaracion(year, options = {}) {
   const newConfig = getConfig(year, options);
@@ -34,27 +37,7 @@ export function calcularGastos(rentaAnual) {
 const COTIZACIONES_OBLIGATORIAS = [
   {
     name: "Seguro de invalidez y sobrevivencia (SIS)",
-    percent: () => {
-      // Esto cambia por año, no tengo seguridad de los años anteriores al 2022
-      // Aunque el uso de esta librería es más actual que histórico (importa año comercial presente y anterior)
-      // No me gusta que esto esté aquí, sin embargo, como hotfix está OK
-      // https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9917.html#recuadros_articulo_4130_0
-      const SIS = {
-        2018: 1.99,
-        2019: 1.99,
-        2020: 1.99,
-        2021: 1.85,
-        2022: 1.54,
-        2023: 1.47,
-        2024: 1.49,
-        2025: 1.49,
-        // 2026: vigente desde agosto 2026 (SP y Previred). Provisorio: la SP aún no publica la tasa del AT 2027,
-        // y la renta usa la vigente a diciembre (https://previsionsocial.gob.cl/wp-content/uploads/2026/01/20251218-Documento-Independientes-CCP-VF.pdf)
-        // https://www.previred.com/indicadores-previsionales/
-        2026: 1.78,
-      };
-      return SIS[config.OPERACION_RENTA - 1] || SIS[2023];
-    },
+    percent: () => config.SIS,
     variable: false,
   },
   {
@@ -75,9 +58,7 @@ const COTIZACIONES_OBLIGATORIAS = [
   },
   {
     name: "AFP",
-    // 10% + comisión de la AFP más barata (Uno: 0,49% hasta sep 2025, 0,46% desde oct 2025)
-    // https://www.previred.com/indicadores-previsionales/
-    percent: () => (config.OPERACION_RENTA - 1 >= 2026 ? 10.46 : 10.49),
+    percent: () => config.AFP,
     variable: true,
   },
 ];
@@ -180,3 +161,17 @@ export function calcular(sueldoMensual) {
     deudaModalidadParcial,
   };
 }
+
+export default {
+  configurarDeclaracion,
+  obtenerConfiguracion,
+  calcularGastos,
+  calcularSueldoImponible,
+  simularCotizaciones,
+  calcularCotizacionesObligatorias,
+  calcularRetencion,
+  buscarTramoImpositivo,
+  calcularImpuestos,
+  calcularDeuda,
+  calcular,
+};

@@ -1,9 +1,18 @@
 {
   "name": "tax-cl",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "Librería cálculo de impuestos y cotizaciones en Chile 🇨🇱",
+  "type": "module",
   "source": "src/index.js",
-  "main": "lib/index.js",
+  "main": "lib/index.cjs",
+  "module": "lib/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/muZk/tax-cl.git"
@@ -11,7 +20,8 @@
   "author": "Nicolás Gómez <ngomez@hey.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "parcel build"
+    "prepublishOnly": "parcel build",
+    "test": "node --test"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",

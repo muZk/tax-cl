@@ -21,6 +21,8 @@ jobs:
 
       - run: npm ci
 
+      - run: npm test
+
       - name: Show tool versions
         run: |
           node -v
