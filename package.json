@@ -1,6 +1,6 @@
 {
   "name": "tax-cl",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "Librería cálculo de impuestos y cotizaciones en Chile 🇨🇱",
   "type": "module",
   "source": "src/index.js",
